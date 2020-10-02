@@ -91,6 +91,15 @@ void Lights::UpdateLightShaderValues()
 	}
 }
 
+void Lights::UpdateShadowValues()
+{
+	for (std::list<std::shared_ptr<ShaderProgram>>::iterator i = m_shaderPrograms.begin(); i != m_shaderPrograms.end(); ++i)
+	{
+		(*i)->SetUniform("in_LightSpaceMatrix", m_application.lock()->GetShadowManager()->GetLightSpaceMatrix());
+		(*i)->SetUniform("in_ShadowMap", m_application.lock()->GetShadowManager()->GetShadowMap());
+	}
+}
+
 void Lights::AddPointLight(std::shared_ptr<Entity> _entity)
 {
 	try

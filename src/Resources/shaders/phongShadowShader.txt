@@ -1,0 +1,2 @@
+../src/resources/shaders/vertFragFiles/phongShadow.vert
+../src/resources/shaders/vertFragFiles/phongShadow.frag

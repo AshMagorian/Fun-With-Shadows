@@ -16,7 +16,7 @@ void ShadowBox::CalcFrustrumWidthsAndHeights()
 void ShadowBox::CalcInitialLightViewMatrix()
 {
 	glm::vec3 lightDir = m_camera->GetApplication()->GetLightManager()->GetDirectionalLight()->direction;
-	glm::vec3 lightPos = 5.0f * glm::normalize(-lightDir);
+	glm::vec3 lightPos = 3.0f * glm::normalize(-lightDir);
 	m_lightViewMatrix = glm::lookAt(lightPos, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 

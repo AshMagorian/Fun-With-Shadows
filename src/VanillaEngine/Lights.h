@@ -39,6 +39,7 @@ public:
 	void AddShaderProgram(std::shared_ptr<ShaderProgram> _shader) { m_shaderPrograms.push_back(_shader); }
 
 	void UpdateLightShaderValues();
+	void UpdateShadowValues();
 
 	void AddPointLight(std::shared_ptr<Entity> _entity);
 	void AddSpotLight(std::shared_ptr<Entity> _entity);

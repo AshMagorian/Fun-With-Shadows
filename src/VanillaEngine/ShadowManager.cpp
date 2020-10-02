@@ -49,6 +49,6 @@ void ShadowManager::DebugDepthTexture()
 	//m_debugDepthShader->SetUniform("near_plane", 1.0f);
 	//m_debugDepthShader->SetUniform("far_plane", 7.5f);
 
-	std::shared_ptr<Texture> tex = std::dynamic_pointer_cast<Texture>(m_depthMap);
+	std::shared_ptr<Texture> tex = std::static_pointer_cast<Texture>(m_depthMap);
 	m_debugDepthShader->Draw(tex);
 }

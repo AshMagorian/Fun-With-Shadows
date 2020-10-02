@@ -36,5 +36,7 @@ private:
 public:
 	void addData(ShadowData _data) { m_objectData.push_back(_data); }
 
+	glm::mat4 GetLightSpaceMatrix() { return (m_lightProjectionMatrix * m_shadowBox->m_lightViewMatrix); }
+	std::shared_ptr<Texture> GetShadowMap() { return std::static_pointer_cast<Texture>(m_depthMap); }
 };
 #endif

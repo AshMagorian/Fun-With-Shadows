@@ -70,7 +70,7 @@ void Application::Run()
 		UpdateCameraData();
 
 		m_shadowManager->RenderShadowMap();
-
+		m_lightManager->UpdateShadowValues();
 		RenderScene();
 
 		glfwSwapBuffers(m_window);
@@ -100,8 +100,7 @@ void Application::UpdateCameraData()
 
 void Application::RenderScene()
 {
-
-	glClearColor(0.7f, 0.2f, 0.3f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glViewport(0, 0, m_windowWidth, m_windowHeight);
