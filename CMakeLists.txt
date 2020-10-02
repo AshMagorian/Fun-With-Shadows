@@ -70,6 +70,8 @@ add_library(VanillaEngine
 	src/VanillaEngine/ShadowManager.cpp
 	src/VanillaEngine/ShadowShader.h
 	src/VanillaEngine/ShadowShader.cpp
+	src/VanillaEngine/RenderTexture.h
+	src/VanillaEngine/RenderTexture.cpp
 )
 
 if(MSVC)

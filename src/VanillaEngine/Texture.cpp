@@ -68,3 +68,43 @@ Texture::Texture(std::string path)
 	// Unbind the texture because we are done operating on it
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+void Texture::SetWrapClampBorder(glm::vec4 _color)
+{
+	glBindTexture(GL_TEXTURE_2D, id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = {_color.x, _color.y, _color.z, _color.w};
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+void Texture::SetWrapClampEdge()
+{
+	glBindTexture(GL_TEXTURE_2D, id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+void Texture::SetWrapRepeat()
+{
+	glBindTexture(GL_TEXTURE_2D, id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+void Texture::SetFilteringLinear()
+{
+	glBindTexture(GL_TEXTURE_2D, id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+}
+void Texture::SetFilteringNearest()
+{
+	glBindTexture(GL_TEXTURE_2D, id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+}

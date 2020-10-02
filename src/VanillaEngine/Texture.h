@@ -17,7 +17,7 @@ private:
 
 	GLuint id;
 	glm::vec2 size; ///< The size of the texture
-
+protected:
 	Texture(int width, int height);
 public:
 	Texture() {}
@@ -25,6 +25,14 @@ public:
 	*\brief Loads the texture from teh path specified
 	*/
 	Texture(std::string path);
+
+	void SetWrapClampBorder(glm::vec4 _color);
+	void SetWrapClampEdge();
+	void SetWrapRepeat();
+
+	void SetFilteringLinear();
+	void SetFilteringNearest();
+
 	/**
 	*\brief Returns the size
 	*/

@@ -23,4 +23,5 @@
 #include "ShadowBox.h"
 #include "ShadowManager.h"
 #include "ShadowShader.h"
+#include "RenderTexture.h"
 #endif

@@ -148,6 +148,48 @@ void ShaderProgram::Draw(std::shared_ptr<VertexArray> vertexArray)
 	glUseProgram(0);
 }
 
+void ShaderProgram::Draw(std::shared_ptr<RenderTexture> renderTexture)
+{
+
+}
+
+void ShaderProgram::Draw(std::shared_ptr<Texture> texture)
+{
+	glUseProgram(id);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture->getId());
+	RenderQuad();
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glUseProgram(0);
+}
+
+void ShaderProgram::RenderQuad()
+{
+	if (m_quadVAO == 0)
+	{
+		float quadVertices[] = {
+			// positions        // texture Coords
+			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		};
+		// setup plane VAO
+		glGenVertexArrays(1, &m_quadVAO);
+		glGenBuffers(1, &m_quadVBO);
+		glBindVertexArray(m_quadVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, m_quadVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	}
+	glBindVertexArray(m_quadVAO);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glBindVertexArray(0);
+}
+
 void ShaderProgram::SetUniform(std::string uniform, glm::vec2 value)
 {
 	GLint uniformId = glGetUniformLocation(id, uniform.c_str());

@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+class RenderTexture;
 class VertexArray;
 class Texture;
 
@@ -27,11 +28,17 @@ private:
 	GLuint AttachVetexShader(std::string _path);
 	GLuint AttachFragmentShader(std::string _path);
 
+	GLuint m_quadVAO = 0;
+	GLuint m_quadVBO;
+
 public:
 	ShaderProgram();
 	ShaderProgram(std::string _path);
 
 	void Draw(std::shared_ptr<VertexArray> vertexArray);
+	void Draw(std::shared_ptr<RenderTexture> renderTexture);
+	void Draw(std::shared_ptr<Texture> texture);
+	void RenderQuad();
 
 	void SetUniform(std::string uniform, glm::vec2 value);
 	void SetUniform(std::string uniform, glm::vec3 value);
