@@ -1,0 +1,2 @@
+../src/resources/shaders/vertFragFiles/lightingShader.vert
+../src/resources/shaders/vertFragFiles/lightingShader.frag

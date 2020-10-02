@@ -1,0 +1,2 @@
+../src/resources/shaders/vertFragFiles/DebugDepth.vert
+../src/resources/shaders/vertFragFiles/DebugDepth.frag
