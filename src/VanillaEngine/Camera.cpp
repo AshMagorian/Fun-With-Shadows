@@ -45,9 +45,9 @@ void Camera::UpdateCameraVectors()
 		UpdateMouseCameraRotation(&yaw, &pitch);
 
 	m_upVector = glm::vec3(0.0f, 1.0f, 0.0f);
-	m_forwardVector.x = cos(glm::radians(-yaw + 90.0f)) * cos(glm::radians(-pitch));
-	m_forwardVector.y = sin(glm::radians(-pitch));
-	m_forwardVector.z = sin(glm::radians(-yaw + 90.0f)) * cos(glm::radians(-pitch));
+	m_forwardVector.x = cos(glm::radians(-yaw + 270.0f )) * cos(glm::radians(pitch));
+	m_forwardVector.y = sin(glm::radians(pitch));
+	m_forwardVector.z = sin(glm::radians(-yaw + 270.0f)) * cos(glm::radians(pitch));
 	m_forwardVector = glm::normalize(m_forwardVector);
 	m_rightVector = glm::normalize(glm::cross(m_forwardVector, m_upVector));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
 	m_upVector = glm::normalize(glm::cross(m_rightVector, m_forwardVector));

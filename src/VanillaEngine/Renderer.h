@@ -1,6 +1,9 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+
 class ShaderProgram;
 class VertexArray;
 class Texture;
@@ -18,6 +21,7 @@ private:
 	std::shared_ptr<VertexArray> m_va;
 	std::shared_ptr<Texture> m_tex;
 	std::shared_ptr<Camera> m_cam;
+	glm::vec4 m_color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	ShadowData m_shadowData;
 
@@ -27,6 +31,8 @@ public:
 
 	void OnInit() {}
 	void OnInit(std::shared_ptr<ShaderProgram> _shader, std::shared_ptr<VertexArray> _va, std::shared_ptr<Texture> _tex);
+	void OnInit(std::shared_ptr<ShaderProgram> _shader, std::shared_ptr<VertexArray> _va, glm::vec4 _color);
+
 	void OnTick();
 	void OnDisplay();
 

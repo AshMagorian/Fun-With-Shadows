@@ -1,0 +1,2 @@
+../src/resources/shaders/vertFragFiles/solidColor.vert
+../src/resources/shaders/vertFragFiles/solidColor.frag

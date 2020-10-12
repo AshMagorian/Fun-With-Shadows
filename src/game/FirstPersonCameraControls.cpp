@@ -19,22 +19,22 @@ void FirstPersonCameraControls::OnTick()
 	if (m_Input->IsKey('w'))
 	{
 		movedFwd = !movedFwd;
-		totalMovement -= m_forwardVector;
+		totalMovement += m_forwardVector;
 	}
 	if (m_Input->IsKey('s'))
 	{
 		movedFwd = !movedFwd;
-		totalMovement += m_forwardVector;
+		totalMovement -= m_forwardVector;
 	}
 	if (m_Input->IsKey('a')) // move left
 	{
 		movedHor = !movedHor;
-		totalMovement += m_rightVector;
+		totalMovement -= m_rightVector;
 	}
 	if (m_Input->IsKey('d')) // move right
 	{
 		movedHor = !movedHor;
-		totalMovement -= m_rightVector;
+		totalMovement += m_rightVector;
 	}
 	if (movedFwd == true || movedHor == true)
 	{

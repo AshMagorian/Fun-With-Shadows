@@ -88,6 +88,8 @@ add_executable(game
 	src/game/main.cpp
 	src/game/FirstPersonCameraControls.h
 	src/game/FirstPersonCameraControls.cpp
+	src/game/LightMovement.h
+	src/game/LightMovement.cpp
 )
 
 target_link_libraries(game VanillaEngine)

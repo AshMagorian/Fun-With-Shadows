@@ -1,6 +1,7 @@
 #include <VanillaEngine/VanillaEngine.h>
 
 #include "FirstPersonCameraControls.h"
+#include "LightMovement.h"
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
 	application->GetResourceManager()->CreateResource<VertexArray>("../src/resources/Cube.obj", "cube");
 	application->GetResourceManager()->CreateResource<VertexArray>("../src/resources/Plane.obj", "plane");
 	application->GetResourceManager()->CreateResource<ShaderProgram>("../src/resources/shaders/phongShadowShader.txt", "phong_shadow_shader");
+	application->GetResourceManager()->CreateResource<ShaderProgram>("../src/resources/shaders/solidColorShader.txt", "solid_color_shader");
 
 	//application->GetLightManager()->AddShaderProgram(application->GetResourceManager()->LoadFromResources<ShaderProgram>("lighting_shader"));
 	application->GetLightManager()->AddShaderProgram(application->GetResourceManager()->LoadFromResources<ShaderProgram>("phong_shadow_shader"));
@@ -23,6 +25,13 @@ int main(int argc, char *argv[])
 	application->GetCamera()->SetCurrentCamera(camera);
 	camera->GetTransform()->SetPos(glm::vec3(0.0f, 0.0f, 5.0f));
 	application->GetCamera()->SetFPSCamera(true);
+
+	//std::shared_ptr<Entity> sun = application->AddEntity();
+	//sun->AddComponent<Renderer>(application->GetResourceManager()->LoadFromResources<ShaderProgram>("solid_color_shader"),
+	//								application->GetResourceManager()->LoadFromResources<VertexArray>("cube"),
+	//								glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	//sun->GetTransform()->SetPos(glm::vec3(0.0f, 7.0f, 0.0f));
+	//sun->AddComponent<LightMovement>();
 
 	std::shared_ptr<Entity> testBox = application->AddEntity();
 	testBox->AddComponent<Renderer>(application->GetResourceManager()->LoadFromResources<ShaderProgram>("phong_shadow_shader"),

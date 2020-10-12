@@ -3,8 +3,8 @@
 Lights::Lights()
 {
 	m_directionalLight->ambient = glm::vec3(0.10f, 0.1f, 0.1f);
-	m_directionalLight->diffuse = glm::vec3(0.25f, 0.25f, 0.25f);
-	m_directionalLight->specular = glm::vec3(0.8f, 0.3f, 0.8f);
+	m_directionalLight->diffuse = glm::vec3(0.3f, 0.3f, 0.3f);
+	m_directionalLight->specular = glm::vec3(0.5f, 0.2f, 0.5f);
 	m_directionalLight->direction = glm::vec3(-0.2f, -1.0f, -0.3f);
 }
 
