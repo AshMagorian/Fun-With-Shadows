@@ -36,6 +36,8 @@ public:
 	void OnTick();
 	void OnDisplay();
 
+	void ToggleShadow(bool _value);
+
 	void SetMesh(std::shared_ptr<VertexArray> _va) { m_va = _va; }
 	void SetTexture(std::shared_ptr<Texture> _tex) { m_tex = _tex; }
 	void SetShader(std::shared_ptr<ShaderProgram> _shader) { m_shaderProgram = _shader; }

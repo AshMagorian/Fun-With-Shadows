@@ -26,12 +26,13 @@ int main(int argc, char *argv[])
 	camera->GetTransform()->SetPos(glm::vec3(0.0f, 0.0f, 5.0f));
 	application->GetCamera()->SetFPSCamera(true);
 
-	//std::shared_ptr<Entity> sun = application->AddEntity();
-	//sun->AddComponent<Renderer>(application->GetResourceManager()->LoadFromResources<ShaderProgram>("solid_color_shader"),
-	//								application->GetResourceManager()->LoadFromResources<VertexArray>("cube"),
-	//								glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-	//sun->GetTransform()->SetPos(glm::vec3(0.0f, 7.0f, 0.0f));
-	//sun->AddComponent<LightMovement>();
+	std::shared_ptr<Entity> sun = application->AddEntity();
+	sun->AddComponent<Renderer>(application->GetResourceManager()->LoadFromResources<ShaderProgram>("solid_color_shader"),
+									application->GetResourceManager()->LoadFromResources<VertexArray>("cube"),
+									glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	sun->GetTransform()->SetPos(glm::vec3(0.0f, 17.0f, 0.0f));
+	sun->AddComponent<LightMovement>();
+	sun->GetComponent<Renderer>()->ToggleShadow(false);
 
 	std::shared_ptr<Entity> testBox = application->AddEntity();
 	testBox->AddComponent<Renderer>(application->GetResourceManager()->LoadFromResources<ShaderProgram>("phong_shadow_shader"),

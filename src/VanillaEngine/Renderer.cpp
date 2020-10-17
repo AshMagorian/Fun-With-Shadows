@@ -11,7 +11,7 @@ void Renderer::OnInit(std::shared_ptr<ShaderProgram> _shader, std::shared_ptr<Ve
 	m_cam = GetApplication()->GetCamera();
 	m_shadowData.transform = GetEntity()->GetTransform();
 	m_shadowData.VA = m_va;
-	GetApplication()->GetShadowManager()->addData(m_shadowData);
+	GetApplication()->GetShadowManager()->AddData(m_shadowData);
 }
 void Renderer::OnInit(std::shared_ptr<ShaderProgram> _shader, std::shared_ptr<VertexArray> _va, glm::vec4 _color)
 {
@@ -21,7 +21,7 @@ void Renderer::OnInit(std::shared_ptr<ShaderProgram> _shader, std::shared_ptr<Ve
 	m_cam = GetApplication()->GetCamera();
 	m_shadowData.transform = GetEntity()->GetTransform();
 	m_shadowData.VA = m_va;
-	GetApplication()->GetShadowManager()->addData(m_shadowData);
+	GetApplication()->GetShadowManager()->AddData(m_shadowData);
 }
 void Renderer::OnTick()
 {
@@ -44,5 +44,17 @@ void Renderer::OnDisplay()
 			m_shaderProgram->SetUniform("in_Color", m_color);
 		}
 		m_shaderProgram->Draw(m_va);
+	}
+}
+
+void Renderer::ToggleShadow(bool _value)
+{
+	if (_value == true)
+	{
+		GetApplication()->GetShadowManager()->AddData(m_shadowData);
+	}
+	else
+	{
+		GetApplication()->GetShadowManager()->RemoveData(m_shadowData);
 	}
 }

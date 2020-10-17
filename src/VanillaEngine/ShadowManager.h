@@ -38,7 +38,8 @@ private:
 	void CalcViewMatrix(glm::vec3 _lightDir, glm::vec3 _center);
 	void CalcOrthoProjectionMatrix(float _w, float _h, float _l);
 public:
-	void addData(ShadowData _data) { m_objectData.push_back(_data); }
+	void AddData(ShadowData _data);
+	void RemoveData(ShadowData _data);
 
 	glm::mat4 GetLightViewMatrix() { return m_lightViewMatrix; }
 	glm::mat4 GetLightSpaceMatrix() { return (m_lightProjectionMatrix * m_lightViewMatrix); }

@@ -60,7 +60,6 @@ void ShadowManager::RenderShadowMap()
 
 void ShadowManager::CalcViewMatrix(glm::vec3 _lightDir, glm::vec3 _center)
 {
-
 	glm::vec3 lightDir = glm::normalize(_lightDir);
 	m_lightViewMatrix = glm::mat4(1.0f);
 	float pitch = (float)acos(glm::length(glm::vec2(lightDir.x, lightDir.z)));
@@ -68,10 +67,11 @@ void ShadowManager::CalcViewMatrix(glm::vec3 _lightDir, glm::vec3 _center)
 	float yaw = (float)glm::degrees((float)atan(lightDir.x / lightDir.z));
 	yaw = lightDir.z > 0.0f ? yaw - 180.0f : yaw;
 	m_lightViewMatrix = glm::rotate(m_lightViewMatrix, -glm::radians(yaw), glm::vec3(0.0f, 1.0f, 0.0f));
-	//glm::vec3 start = _center - (lightDir * (m_shadowBox->GetLength() / 2.0f));
-	m_lightViewMatrix = glm::translate(m_lightViewMatrix, _center);
+	glm::vec3 start = -_center + (lightDir * (m_shadowBox->GetLength() / 4.0f));
+	m_lightViewMatrix = glm::translate(m_lightViewMatrix, start);
 
-	std::cout << "X: " << _center.x << "Y: " << _center.y << "Z: " << _center.z << std::endl;
+
+	//std::cout << "X: " << _center.x << "Y: " << _center.y << "Z: " << _center.z << std::endl;
 	//std::cout << "pitch: " << glm::degrees(pitch) << "    yaw: " << yaw << std::endl;
 	//temp
 	//glm::vec3 lightPos = 3.0f * glm::normalize(-_lightDir);
@@ -102,4 +102,31 @@ void ShadowManager::DebugDepthTexture()
 
 	std::shared_ptr<Texture> tex = std::static_pointer_cast<Texture>(m_depthMap);
 	m_debugDepthShader->Draw(tex);
+}
+
+void ShadowManager::AddData(ShadowData _data)
+{
+	std::shared_ptr<Entity> e = _data.transform->GetEntity();
+	for (std::list<ShadowData>::iterator i = m_objectData.begin(); i != m_objectData.end(); ++i)
+	{
+		if (i->transform->GetEntity() == e)
+		{
+			return;
+		}
+	}
+	m_objectData.push_back(_data);
+}
+
+void ShadowManager::RemoveData(ShadowData _data)
+{
+	std::shared_ptr<Entity> e = _data.transform->GetEntity();
+	for (std::list<ShadowData>::iterator i = m_objectData.begin(); i != m_objectData.end(); ++i)
+	{
+		if (i->transform->GetEntity() == e)
+		{
+			m_objectData.erase(i);
+			return;
+		}
+	}
+	std::cout << "Couldn't remove data, shadow data not found" << std::endl;
 }

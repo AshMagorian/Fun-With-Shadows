@@ -51,6 +51,9 @@ in VS_OUT {
 uniform vec3 in_ViewPos;
 uniform DirLight in_DirLight;
 
+const float in_ShadowDistance = 30.0;
+const float in_TransitionDistance = 5.0;
+
 uniform int in_NoPointLights;
 uniform int in_NoSpotLights;
 
@@ -170,8 +173,17 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 	//Compares values to check if the fragment is in shadow
 	float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;  
 
-	if(projCoords.z > 1.0)
+	if(projCoords.z > 1.0 && closestDepth == 1.0)
     shadow = 0.0;
+
+	//shadow distance fading
+	float distance = length((fs_in.FragPos - in_ViewPos).xyz);
+	distance = distance - (in_ShadowDistance - in_TransitionDistance);
+	distance = distance / in_TransitionDistance;
+	if(shadow > 0.0)
+	{
+		shadow = clamp(1.0 - distance, 0.0, 1.0);
+	}
 
 	return shadow;
 }

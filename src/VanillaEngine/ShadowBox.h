@@ -17,8 +17,8 @@ private:
 	bool m_first = true;
 	glm::vec4 m_upVector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 	glm::vec4 m_forwardVector = glm::vec4(0.0f, 0.0f, -1.0f, 0.0f);
-	float m_nearPlaneDistance = 0.1f;
-	float m_shadowDistance = 12.0f;
+	float m_nearPlaneDistance = 0.5f;
+	float m_shadowDistance = 30.0f;
 
 	float m_minX, m_maxX;
 	float m_minY, m_maxY;
