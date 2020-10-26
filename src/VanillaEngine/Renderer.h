@@ -43,5 +43,7 @@ public:
 	void SetShader(std::shared_ptr<ShaderProgram> _shader) { m_shaderProgram = _shader; }
 	void SetCamera(std::shared_ptr<Camera> _cam) { m_cam = _cam; }
 
+	std::shared_ptr<Texture> GetTexture() { return m_tex; }
+
 };
 #endif

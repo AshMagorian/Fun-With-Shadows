@@ -49,7 +49,14 @@ ShaderProgram::ShaderProgram(std::string _path)
 	glGetProgramiv(id, GL_LINK_STATUS, &success);
 	if (!success)
 	{
-		throw Exception("Shader cannot be created");
+		GLint maxLength = 0;
+		glGetProgramiv(id, GL_INFO_LOG_LENGTH, &maxLength);
+
+		// The maxLength includes the NULL character
+		std::vector<GLchar> infoLog(maxLength);
+		glGetProgramInfoLog(id, maxLength, &maxLength, &infoLog[0]);
+		glDeleteProgram(id);
+		throw Exception("Shader link error: " + (std::string)&infoLog.at(0));
 	}
 	glUseProgram(id);
 

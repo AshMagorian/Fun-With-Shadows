@@ -51,8 +51,11 @@ in VS_OUT {
 uniform vec3 in_ViewPos;
 uniform DirLight in_DirLight;
 
-const float in_ShadowDistance = 30.0;
-const float in_TransitionDistance = 5.0;
+const float in_ShadowDistance = 50.0;
+const float in_TransitionDistance = 8.0;
+
+const int pcfCount = 2;
+const float totalTexels = (pcfCount * 2.0 + 1.0) * (pcfCount * 2.0 + 1.0);
 
 uniform int in_NoPointLights;
 uniform int in_NoSpotLights;
@@ -66,7 +69,7 @@ uniform sampler2D in_ShadowMap;
 vec3 CalcDirLight(DirLight _light, vec3 _normal, vec3 _viewDir, vec3 diffuseTex, vec3 specularTex);
 vec3 CalcPointLight(PointLight light, vec3 _normal, vec3 fragPos, vec3 viewDir, vec3 diffuseTex, vec3 specularTex);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 diffuseTex, vec3 specularTex);
-float ShadowCalculation(vec4 fragPosLightSpace);
+float PCFCalculation(vec3 normal, vec3 lightDir);
 
 void main()
 {
@@ -104,7 +107,7 @@ vec3 CalcDirLight(DirLight _light, vec3 _normal, vec3 _viewDir, vec3 diffuseTex,
 	vec3 diffuse = _light.diffuse * diff * diffuseTex;
 	vec3 specular = _light.specular * spec * specularTex;
 	
-	float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
+	float shadow = PCFCalculation(_normal, lightDir);
 	return (ambient + (1.0 - shadow) * (diffuse + specular));
 }
 
@@ -157,33 +160,44 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec
     return (ambient + diffuse + specular);
 }
 
-float ShadowCalculation(vec4 fragPosLightSpace)
+float PCFCalculation(vec3 normal, vec3 lightDir)
 {
 	// perform perspective divide
-    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    vec3 projCoords = fs_in.FragPosLightSpace.xyz / fs_in.FragPosLightSpace.w;
 	// transforms coordinates to the range [0,1]
 	projCoords = projCoords * 0.5 + 0.5;
-	//The closest depth of the light's POV
-	float closestDepth = texture(in_ShadowMap, projCoords.xy).r;   
-	//Current depth of the fragment from the light's POV
-	float currentDepth = projCoords.z; 
-
 	float bias = 0.005;
+	//float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005); 
 
-	//Compares values to check if the fragment is in shadow
-	float shadow = currentDepth - bias > closestDepth  ? 1.0 : 0.0;  
-
-	if(projCoords.z > 1.0 && closestDepth == 1.0)
-    shadow = 0.0;
+	float mapSize = 2048.0;
+	float texelSize = 1.0 / mapSize;
+	float total = 0.0;
+	for(int x = -pcfCount; x <= pcfCount; x++)
+	{
+		for(int y = -pcfCount; y <= pcfCount; y++)
+		{
+			float nearestDepth = texture(in_ShadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+			if(projCoords.z - bias > nearestDepth)
+			{
+				if(projCoords.z > 1.0 && nearestDepth == 1.0)
+				{}
+				else
+				{
+					total += 1.0;
+				}
+			}
+		}
+	}
+	total /= totalTexels;
 
 	//shadow distance fading
 	float distance = length((fs_in.FragPos - in_ViewPos).xyz);
 	distance = distance - (in_ShadowDistance - in_TransitionDistance);
 	distance = distance / in_TransitionDistance;
-	if(shadow > 0.0)
+	if(total > 0.0)
 	{
-		shadow = clamp(1.0 - distance, 0.0, 1.0);
+		distance = clamp(1.0 - distance, 0.0, 1.0);
+		total *= distance;
 	}
-
-	return shadow;
+	return total;
 }

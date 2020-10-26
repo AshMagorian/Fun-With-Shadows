@@ -17,7 +17,7 @@ void ShadowManager::Init(std::weak_ptr<Application> _app)
 	}
 	m_debugDepthShader = std::make_shared<ShaderProgram>("../src/resources/shaders/debugDepthShader.txt");
 
-	m_shadowWidth = 1024; m_shadowHeight = 1024;
+	m_shadowWidth = 2048; m_shadowHeight = 2048;
 
 	m_depthMap = std::make_shared<RenderTexture>(m_shadowWidth, m_shadowHeight);
 	m_depthMap->InitDepthOnly();
@@ -67,9 +67,11 @@ void ShadowManager::CalcViewMatrix(glm::vec3 _lightDir, glm::vec3 _center)
 	float yaw = (float)glm::degrees((float)atan(lightDir.x / lightDir.z));
 	yaw = lightDir.z > 0.0f ? yaw - 180.0f : yaw;
 	m_lightViewMatrix = glm::rotate(m_lightViewMatrix, -glm::radians(yaw), glm::vec3(0.0f, 1.0f, 0.0f));
-	glm::vec3 start = -_center + (lightDir * (m_shadowBox->GetLength() / 4.0f));
-	m_lightViewMatrix = glm::translate(m_lightViewMatrix, start);
-
+	
+	//float offset = 5.0f;
+	//glm::vec3 start = -_center + (lightDir * offset);
+	//m_lightViewMatrix = glm::translate(m_lightViewMatrix, start);
+	m_lightViewMatrix = glm::translate(m_lightViewMatrix, -_center);
 
 	//std::cout << "X: " << _center.x << "Y: " << _center.y << "Z: " << _center.z << std::endl;
 	//std::cout << "pitch: " << glm::degrees(pitch) << "    yaw: " << yaw << std::endl;
@@ -80,9 +82,11 @@ void ShadowManager::CalcViewMatrix(glm::vec3 _lightDir, glm::vec3 _center)
 
 void ShadowManager::CalcOrthoProjectionMatrix(float _w, float _h, float _l)
 {
+	float offset = 20.0f;
+	_l += offset;
 	m_lightProjectionMatrix = glm::mat4(1.0f);
-	m_lightProjectionMatrix[0][0] = 2.0f / _w;
-	m_lightProjectionMatrix[1][1] = 2.0f / _h;
+	m_lightProjectionMatrix[0][0] = 2.0f / (_w + 5.0f);
+	m_lightProjectionMatrix[1][1] = 2.0f / (_h + 5.0f);
 	m_lightProjectionMatrix[2][2] = -2.0f / _l;
 	m_lightProjectionMatrix[3][3] = 1.0f;
 
@@ -95,7 +99,7 @@ void ShadowManager::CalcOrthoProjectionMatrix(float _w, float _h, float _l)
 
 void ShadowManager::DebugDepthTexture()
 {
-	glViewport(0, 0, m_shadowWidth / 3, m_shadowHeight / 3);
+	glViewport(0, 0, 1024 / 3, 1024 / 3);
 
 	//m_debugDepthShader->SetUniform("near_plane", 1.0f);
 	//m_debugDepthShader->SetUniform("far_plane", 7.5f);
