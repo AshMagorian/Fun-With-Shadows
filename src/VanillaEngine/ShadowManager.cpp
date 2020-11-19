@@ -82,7 +82,7 @@ void ShadowManager::CalcViewMatrix(glm::vec3 _lightDir, glm::vec3 _center)
 
 void ShadowManager::CalcOrthoProjectionMatrix(float _w, float _h, float _l)
 {
-	float offset = 20.0f;
+	float offset = 80.0f;
 	_l += offset;
 	m_lightProjectionMatrix = glm::mat4(1.0f);
 	m_lightProjectionMatrix[0][0] = 2.0f / (_w + 5.0f);

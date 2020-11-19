@@ -3,10 +3,6 @@
 #include <glm/ext.hpp>
 #include <iostream>
 
-ShaderProgram::ShaderProgram()
-{
-	id = glCreateProgram();
-}
 
 /**
 *The file passed through contains the paths for both shader files. This is because to make
@@ -32,11 +28,20 @@ ShaderProgram::ShaderProgram(std::string _path)
 		fragPath += line;
 	}
 	file.close();
+	CreateShaderProgram(vertPath, fragPath);
+}
 
+ShaderProgram::ShaderProgram(std::string _vert, std::string _frag)
+{
+	CreateShaderProgram(_vert, _frag);
+}
+
+void ShaderProgram::CreateShaderProgram(std::string _vert, std::string _frag)
+{
 	id = glCreateProgram();
 
-	GLuint vertexShaderId = AttachVetexShader(vertPath);
-	GLuint fragmentShaderId = AttachFragmentShader(fragPath);
+	GLuint vertexShaderId = AttachVetexShader(_vert);
+	GLuint fragmentShaderId = AttachFragmentShader(_frag);
 
 	glBindAttribLocation(id, 0, "in_Position");
 	glBindAttribLocation(id, 1, "in_Color");

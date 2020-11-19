@@ -20,8 +20,15 @@ int main(int argc, char *argv[])
 	application->GetResourceManager()->CreateResource<Texture>("../src/resources/grass.jpg", "grass_tex");
 
 	application->GetResourceManager()->CreateResource<Texture>("../src/resources/fantasyDiff.jpg", "fantasy_tex");
-	application->GetResourceManager()->CreateResource<VertexArray>("../src/resources/fantasy.obj", "fantasy");
+	//application->GetResourceManager()->CreateResource<VertexArray>("../src/resources/fantasy.obj", "fantasy");
 
+	application->getSkybox()->CreateSkybox("space",
+		"../src/resources/textures/space_right.png",
+		"../src/resources/textures/space_left.png",
+		"../src/resources/textures/space_up.png",
+		"../src/resources/textures/space_down.png",
+		"../src/resources/textures/space_back.png",
+		"../src/resources/textures/space_front.png" );
 
 	//application->GetLightManager()->AddShaderProgram(application->GetResourceManager()->LoadFromResources<ShaderProgram>("lighting_shader"));
 	application->GetLightManager()->AddShaderProgram(application->GetResourceManager()->LoadFromResources<ShaderProgram>("phong_shadow_shader"));
@@ -45,21 +52,15 @@ int main(int argc, char *argv[])
 	testBox->AddComponent<Renderer>(application->GetResourceManager()->LoadFromResources<ShaderProgram>("phong_shadow_shader"),
 									application->GetResourceManager()->LoadFromResources<VertexArray>("cube") ,
 									application->GetResourceManager()->LoadFromResources<Texture>("orange_tex"));
+	testBox->GetTransform()->SetPos(glm::vec3(0.0f, -5.0f, 0.0f));
 
-	//std::shared_ptr<Entity> floor = application->AddEntity();
-	//floor->AddComponent<Renderer>(application->GetResourceManager()->LoadFromResources<ShaderProgram>("phong_shadow_shader"),
-	//								application->GetResourceManager()->LoadFromResources<VertexArray>("plane"),
-	//								application->GetResourceManager()->LoadFromResources<Texture>("orange_tex"));
-	//floor->GetTransform()->SetPos(glm::vec3(0.0f, -4.0f, 0.0f));
-	//floor->GetTransform()->SetScale(glm::vec3(3.0f, 1.0f, 3.0f));
-
-	std::shared_ptr<Entity> mountain = application->AddEntity();
-	mountain->AddComponent<Renderer>(application->GetResourceManager()->LoadFromResources<ShaderProgram>("phong_shadow_shader"),
-									application->GetResourceManager()->LoadFromResources<VertexArray>("fantasy"),
-									application->GetResourceManager()->LoadFromResources<Texture>("fantasy_tex"));
-	mountain->GetTransform()->SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
-	mountain->GetTransform()->SetScale(glm::vec3(100.0f, 100.0f, 100.0f));
-	mountain->GetTransform()->SetRotation(glm::vec3(-90.0f, 0.0f, 0.0f));
+	//std::shared_ptr<Entity> mountain = application->AddEntity();
+	//mountain->AddComponent<Renderer>(application->GetResourceManager()->LoadFromResources<ShaderProgram>("phong_shadow_shader"),
+	//								application->GetResourceManager()->LoadFromResources<VertexArray>("fantasy"),
+	//								application->GetResourceManager()->LoadFromResources<Texture>("fantasy_tex"));
+	//mountain->GetTransform()->SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
+	//mountain->GetTransform()->SetScale(glm::vec3(100.0f, 100.0f, 100.0f));
+	//mountain->GetTransform()->SetRotation(glm::vec3(-90.0f, 0.0f, 0.0f));
 
 
 	/**

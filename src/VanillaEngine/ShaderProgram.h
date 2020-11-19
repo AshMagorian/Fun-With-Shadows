@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+#include "Resource.h"
+
 class RenderTexture;
 class VertexArray;
 class Texture;
@@ -23,6 +25,7 @@ private:
 	GLuint id;
 	std::vector<Sampler> samplers;
 
+	void CreateShaderProgram(std::string _vert, std::string _frag);
 	void ReadFromFile(std::string _path, std::string& _text);
 	void CompileShader(GLuint _id, std::string _shaderType);
 	GLuint AttachVetexShader(std::string _path);
@@ -32,8 +35,8 @@ private:
 	GLuint m_quadVBO;
 
 public:
-	ShaderProgram();
 	ShaderProgram(std::string _path);
+	ShaderProgram(std::string _vert, std::string _frag);
 
 	void Draw(std::shared_ptr<VertexArray> vertexArray);
 	void Draw(std::shared_ptr<RenderTexture> renderTexture);

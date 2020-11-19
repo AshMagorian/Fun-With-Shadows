@@ -16,6 +16,7 @@ class Input;
 class Resources;
 class Lights;
 class ShadowManager;
+class Skybox;
 
 class Application
 {
@@ -30,6 +31,7 @@ private:
 	std::shared_ptr<Resources> m_resourceManager = std::make_shared<Resources>(); ///< A pointer to the resource manager for accesibility
 	std::shared_ptr<Lights> m_lightManager = std::make_shared<Lights>();
 	std::shared_ptr<ShadowManager> m_shadowManager = std::make_shared<ShadowManager>();
+	std::shared_ptr<Skybox> m_skybox = std::make_shared<Skybox>();
 
 	GLFWwindow* m_window = nullptr;
 
@@ -52,6 +54,7 @@ public:
 	std::shared_ptr<Lights> GetLightManager() { return m_lightManager; }
 	std::shared_ptr<Input> GetInput() { return m_input; }
 	std::shared_ptr<ShadowManager> GetShadowManager() { return m_shadowManager; }
+	std::shared_ptr<Skybox> getSkybox() { return m_skybox; }
 	float GetDeltaTime();
 	std::shared_ptr<Entity> AddEntity();
 

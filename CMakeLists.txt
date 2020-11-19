@@ -72,6 +72,8 @@ add_library(VanillaEngine
 	src/VanillaEngine/ShadowShader.cpp
 	src/VanillaEngine/RenderTexture.h
 	src/VanillaEngine/RenderTexture.cpp
+	src/VanillaEngine/SkyBox.h
+	src/VanillaEngine/SkyBox.cpp
 )
 
 if(MSVC)
