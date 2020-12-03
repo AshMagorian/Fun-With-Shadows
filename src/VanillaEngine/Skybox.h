@@ -9,18 +9,13 @@
 class ShaderProgram;
 class Application;
 
-struct BoxTexture
-{
-	GLuint id;
-	std::string name;
-};
 
 class Skybox
 {
 private:
 	GLuint textureID;
 	GLuint vaID;
-	std::vector<BoxTexture> m_boxTextures;
+	GLuint vbID;
 	std::vector<std::string> m_texturesFaces;
 	std::shared_ptr<ShaderProgram> m_shader;
 	std::weak_ptr<Application> m_application;
@@ -42,7 +37,7 @@ public:
 	/*
 	*Sets the named skybox as the current one
 	*/
-	void SetSkybox(std::string _name);
+	//void SetSkybox(std::string _name);
 
 	void DrawSkybox();
 };

@@ -31,7 +31,6 @@ void Camera::UpdateMatrix()
 
 	m_projectionMatrix = glm::perspective(glm::radians(m_viewAngle),
 		(float)m_windowWidth / (float)m_windowHeight, 0.1f, 100.f);
-	//m_projectionMatrix = glm::ortho(0.0f, (float)_w, 0.0f, (float)_h, -1.0f, 1.0f);
 	m_viewMatrix = glm::inverse(m_currentCamera->GetTransform()->GetModelMatrix());
 
 }
