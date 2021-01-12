@@ -51,6 +51,7 @@ public:
 	void SetUniform(std::string uniform, glm::mat4 value);
 	void SetUniform(std::string uniform, std::shared_ptr<Texture> texture);
 
+	std::vector<Sampler> GetSamplers() { return samplers; }
 	GLuint GetId() { return id; }
 };
 #endif

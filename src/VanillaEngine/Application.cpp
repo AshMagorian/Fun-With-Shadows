@@ -45,6 +45,7 @@ std::shared_ptr<Application> const Application::Init(int _w, int _h)
 	app->m_lightManager->Init(app->self);
 	app->m_shadowManager->Init(app->self);
 	app->m_skybox ->Init(app->self);
+	app->m_terrainRenderer->Init(app->self);
 
 	return app;
 }
@@ -107,6 +108,7 @@ void Application::RenderScene()
 	glViewport(0, 0, m_windowWidth, m_windowHeight);
 
 	m_skybox->DrawSkybox();
+	m_terrainRenderer->Draw();
 	for (std::list<std::shared_ptr<Entity>>::iterator i = entities.begin(); i != entities.end(); ++i)
 	{
 		(*i)->Display();

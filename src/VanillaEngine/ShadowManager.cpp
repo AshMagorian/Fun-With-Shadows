@@ -51,10 +51,10 @@ void ShadowManager::RenderShadowMap()
 	CalcOrthoProjectionMatrix(m_shadowBox->GetWidth(), m_shadowBox->GetHeight(), m_shadowBox->GetLength());
 	CalcViewMatrix(lightDir, m_shadowBox->GetCenter());
 
-
 	m_shader->SetUniforms(m_lightViewMatrix, m_lightProjectionMatrix);
-	//m_shader->SetUniforms(m_application.lock()->GetCamera()->GetViewMatrix(), m_application.lock()->GetCamera()->GetProjectionMatrix());
-	m_shader->Draw(m_objectData);
+
+	std::list<std::shared_ptr<Terrain>> terrainData = m_application.lock()->GetTerrainRenderer()->GetTerrain();
+	m_shader->Draw(m_objectData, terrainData);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 

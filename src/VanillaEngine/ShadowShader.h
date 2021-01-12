@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 
 class VertexArray;
+class Terrain;
 
 class ShadowShader
 {
@@ -21,6 +22,6 @@ private:
 
 	void SetUniforms(glm::mat4 _view, glm::mat4 _projection);
 
-	void Draw(std::list<ShadowData> _data);
+	void Draw(std::list<ShadowData> _data, std::list<std::shared_ptr<Terrain>> _terrainData);
 };
 #endif

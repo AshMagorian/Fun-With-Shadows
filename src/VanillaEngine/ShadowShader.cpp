@@ -95,17 +95,25 @@ void ShadowShader::SetUniforms(glm::mat4 _view, glm::mat4 _projection)
 	glUseProgram(0);
 }
 
-void ShadowShader::Draw(std::list<ShadowData> _data)
+void ShadowShader::Draw(std::list<ShadowData> _data, std::list<std::shared_ptr<Terrain>> _terrainData)
 {
 	glUseProgram(id);
 
 	for (std::list<ShadowData>::iterator i = _data.begin(); i != _data.end(); ++i)
 	{
 		glUniformMatrix4fv(glGetUniformLocation(id, "in_Model"), 1, GL_FALSE, glm::value_ptr((*i).transform->GetModelMatrix()));
-
+	
 		glBindVertexArray((*i).VA->GetIdVertexOnly());
 		glDrawArrays(GL_TRIANGLES, 0, (*i).VA->GetVertexCount());
 	}
+
+	for (std::list<std::shared_ptr<Terrain>>::iterator i = _terrainData.begin(); i != _terrainData.end(); ++i)
+	{
+		glUniformMatrix4fv(glGetUniformLocation(id, "in_Model"), 1, GL_FALSE, glm::value_ptr((*i)->GetModelMatrix()));
+		glBindVertexArray((*i)->GetVaId());
+		glDrawElements(GL_TRIANGLES, (*i)->GetModelVertexCount(), GL_UNSIGNED_INT, 0);
+	}
+
 	glBindVertexArray(0);
 	glUseProgram(0);
 }

@@ -17,6 +17,7 @@ class Resources;
 class Lights;
 class ShadowManager;
 class Skybox;
+class TerrainRenderer;
 
 class Application
 {
@@ -32,6 +33,7 @@ private:
 	std::shared_ptr<Lights> m_lightManager = std::make_shared<Lights>();
 	std::shared_ptr<ShadowManager> m_shadowManager = std::make_shared<ShadowManager>();
 	std::shared_ptr<Skybox> m_skybox = std::make_shared<Skybox>();
+	std::shared_ptr<TerrainRenderer> m_terrainRenderer = std::make_shared<TerrainRenderer>();
 
 	GLFWwindow* m_window = nullptr;
 
@@ -54,7 +56,8 @@ public:
 	std::shared_ptr<Lights> GetLightManager() { return m_lightManager; }
 	std::shared_ptr<Input> GetInput() { return m_input; }
 	std::shared_ptr<ShadowManager> GetShadowManager() { return m_shadowManager; }
-	std::shared_ptr<Skybox> getSkybox() { return m_skybox; }
+	std::shared_ptr<Skybox> GetSkybox() { return m_skybox; }
+	std::shared_ptr<TerrainRenderer> GetTerrainRenderer() { return m_terrainRenderer; }
 	float GetDeltaTime();
 	std::shared_ptr<Entity> AddEntity();
 

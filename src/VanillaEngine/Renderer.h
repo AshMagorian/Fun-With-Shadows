@@ -12,6 +12,9 @@ struct ShadowData
 {
 	std::shared_ptr<Transform> transform;
 	std::shared_ptr<VertexArray> VA;
+	//GLuint vaID;
+	//int vertexCount;
+	//std::shared_ptr<glm::mat4> modelMatrix;
 };
 
 class Renderer : public Component
@@ -24,6 +27,7 @@ private:
 	glm::vec4 m_color = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	ShadowData m_shadowData;
+	void InitShadowData();
 
 public:
 	Renderer();

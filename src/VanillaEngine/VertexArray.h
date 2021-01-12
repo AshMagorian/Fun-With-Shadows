@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
+#include <memory>
 #include <vector>
 #include <string>
 

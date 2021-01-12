@@ -74,6 +74,10 @@ add_library(VanillaEngine
 	src/VanillaEngine/RenderTexture.cpp
 	src/VanillaEngine/SkyBox.h
 	src/VanillaEngine/SkyBox.cpp
+	src/VanillaEngine/Terrain.h
+	src/VanillaEngine/Terrain.cpp
+	src/VanillaEngine/TerrainRenderer.h
+	src/VanillaEngine/TerrainRenderer.cpp
 )
 
 if(MSVC)

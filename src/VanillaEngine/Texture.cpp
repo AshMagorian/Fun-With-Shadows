@@ -1,5 +1,5 @@
 #include "Texture.h"
-
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include "Exception.h"
 
@@ -40,6 +40,8 @@ Texture::Texture(std::string path)
 		std::cout << "myEngine Exception: " << e.what() << std::endl;
 	}
 
+	stbi_uc pixel = data[0];
+
 	size.x = w;
 	size.y = h;
 
@@ -52,6 +54,8 @@ Texture::Texture(std::string path)
 	}
 	glBindTexture(GL_TEXTURE_2D, id);
 
+	stbi_uc *p;
+	
 	// Set the texture wrapping and filter options
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

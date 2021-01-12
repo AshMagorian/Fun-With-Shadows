@@ -25,4 +25,6 @@
 #include "ShadowShader.h"
 #include "RenderTexture.h"
 #include "Skybox.h"
+#include "Terrain.h"
+#include "TerrainRenderer.h"
 #endif

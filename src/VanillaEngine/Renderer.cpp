@@ -12,6 +12,7 @@ void Renderer::OnInit(std::shared_ptr<ShaderProgram> _shader, std::shared_ptr<Ve
 	m_shadowData.transform = GetEntity()->GetTransform();
 	m_shadowData.VA = m_va;
 	GetApplication()->GetShadowManager()->AddData(m_shadowData);
+
 }
 void Renderer::OnInit(std::shared_ptr<ShaderProgram> _shader, std::shared_ptr<VertexArray> _va, glm::vec4 _color)
 {
@@ -22,7 +23,14 @@ void Renderer::OnInit(std::shared_ptr<ShaderProgram> _shader, std::shared_ptr<Ve
 	m_shadowData.transform = GetEntity()->GetTransform();
 	m_shadowData.VA = m_va;
 	GetApplication()->GetShadowManager()->AddData(m_shadowData);
+
 }
+
+void Renderer::InitShadowData()
+{
+
+}
+
 void Renderer::OnTick()
 {
 

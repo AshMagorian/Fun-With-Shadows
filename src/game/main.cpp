@@ -16,14 +16,15 @@ int main(int argc, char *argv[])
 	application->GetResourceManager()->CreateResource<VertexArray>("../src/resources/Plane.obj", "plane");
 	application->GetResourceManager()->CreateResource<ShaderProgram>("../src/resources/shaders/phongShadowShader.txt", "phong_shadow_shader");
 	application->GetResourceManager()->CreateResource<ShaderProgram>("../src/resources/shaders/solidColorShader.txt", "solid_color_shader");
-	application->GetResourceManager()->CreateResource<VertexArray>("../src/resources/Mountain.obj", "mountain");
+
+
+	application->GetResourceManager()->CreateResource<Texture>("../src/resources/blendMap.png", "blendMap");
 	application->GetResourceManager()->CreateResource<Texture>("../src/resources/grass.jpg", "grass_tex");
+	application->GetResourceManager()->CreateResource<Texture>("../src/resources/dirt.png", "dirt_tex");
+	application->GetResourceManager()->CreateResource<Texture>("../src/resources/flowers.png", "flowers_tex");
+	application->GetResourceManager()->CreateResource<Texture>("../src/resources/path.jpg", "path_tex");
 
-	application->GetResourceManager()->CreateResource<Texture>("../src/resources/fantasyDiff.jpg", "fantasy_tex");
-	application->GetResourceManager()->CreateResource<VertexArray>("../src/resources/fantasy.obj", "fantasy");
-
-
-	application->getSkybox()->CreateSkybox("bg",
+	application->GetSkybox()->CreateSkybox("bg",
 		"../src/resources/textures/right.jpg",
 		"../src/resources/textures/left.jpg",
 		"../src/resources/textures/top.jpg",
@@ -38,7 +39,7 @@ int main(int argc, char *argv[])
 	std::shared_ptr<Entity> camera = application->AddEntity();
 	camera->AddComponent<FirstPersonCameraControls>();
 	application->GetCamera()->SetCurrentCamera(camera);
-	camera->GetTransform()->SetPos(glm::vec3(0.0f, 0.0f, 5.0f));
+	camera->GetTransform()->SetPos(glm::vec3(15.0f, 5.0f, 15.0f));
 	application->GetCamera()->SetFPSCamera(true);
 
 	std::shared_ptr<Entity> sun = application->AddEntity();
@@ -54,15 +55,14 @@ int main(int argc, char *argv[])
 	testBox->AddComponent<Renderer>(application->GetResourceManager()->LoadFromResources<ShaderProgram>("phong_shadow_shader"),
 									application->GetResourceManager()->LoadFromResources<VertexArray>("cube") ,
 									application->GetResourceManager()->LoadFromResources<Texture>("orange_tex"));
-	testBox->GetTransform()->SetPos(glm::vec3(0.0f, -5.0f, 0.0f));
+	testBox->GetTransform()->SetPos(glm::vec3(20.0f, 5.0f, 20.0f));
 
-	std::shared_ptr<Entity> mountain = application->AddEntity();
-	mountain->AddComponent<Renderer>(application->GetResourceManager()->LoadFromResources<ShaderProgram>("phong_shadow_shader"),
-									application->GetResourceManager()->LoadFromResources<VertexArray>("fantasy"),
-									application->GetResourceManager()->LoadFromResources<Texture>("fantasy_tex"));
-	mountain->GetTransform()->SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
-	mountain->GetTransform()->SetScale(glm::vec3(100.0f, 100.0f, 100.0f));
-	mountain->GetTransform()->SetRotation(glm::vec3(-90.0f, 0.0f, 0.0f));
+
+	application->GetTerrainRenderer()->AddTerrainBlock(0, 0,	application->GetResourceManager()->LoadFromResources<Texture>("blendMap"), 
+																application->GetResourceManager()->LoadFromResources<Texture>("grass_tex"), 
+																application->GetResourceManager()->LoadFromResources<Texture>("dirt_tex"), 
+																application->GetResourceManager()->LoadFromResources<Texture>("flowers_tex"), 
+																application->GetResourceManager()->LoadFromResources<Texture>("path_tex"));
 
 
 	/**
