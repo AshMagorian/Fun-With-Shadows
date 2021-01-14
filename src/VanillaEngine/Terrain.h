@@ -14,7 +14,11 @@ class Terrain
 private:
 
 	const static float size;
-	const static int vertexCount = 128;
+	int vertexCount;
+
+	const static float m_maxHeight;
+	const static float m_maxPixelColour;
+
 	float x, z;
 	glm::mat4 m_model;
 	GLuint m_model_id;
@@ -24,6 +28,8 @@ private:
 	std::vector<std::shared_ptr<Texture>> m_textures;
 
 	void GenerateTerrain();
+	float GetTerrainHeight(int x, int y, unsigned char* data);
+	glm::vec3 CalculateNormal(int x, int y, unsigned char* data);
 	void CreateVAO(std::vector<float> _vert, std::vector<float> _norm, std::vector<float> _tex, std::vector<int> _ind);
 	void CreateModelMatrix();
 	void SetTextures(std::shared_ptr<Texture> _blendMap, std::shared_ptr<Texture> _bg, std::shared_ptr<Texture> _r, std::shared_ptr<Texture> _g, std::shared_ptr<Texture> _b);

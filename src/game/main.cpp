@@ -13,7 +13,6 @@ int main(int argc, char *argv[])
 	application->GetResourceManager()->CreateResource<Texture>("../src/resources/orange.png", "orange_tex");
 	application->GetResourceManager()->CreateResource<ShaderProgram>("../src/resources/shaders/lightingShader.txt", "lighting_shader");
 	application->GetResourceManager()->CreateResource<VertexArray>("../src/resources/Cube.obj", "cube");
-	application->GetResourceManager()->CreateResource<VertexArray>("../src/resources/Plane.obj", "plane");
 	application->GetResourceManager()->CreateResource<ShaderProgram>("../src/resources/shaders/phongShadowShader.txt", "phong_shadow_shader");
 	application->GetResourceManager()->CreateResource<ShaderProgram>("../src/resources/shaders/solidColorShader.txt", "solid_color_shader");
 
@@ -31,6 +30,7 @@ int main(int argc, char *argv[])
 		"../src/resources/textures/bottom.jpg",
 		"../src/resources/textures/back.jpg",
 		"../src/resources/textures/front.jpg");
+
 
 
 	//application->GetLightManager()->AddShaderProgram(application->GetResourceManager()->LoadFromResources<ShaderProgram>("lighting_shader"));
@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
 																application->GetResourceManager()->LoadFromResources<Texture>("dirt_tex"), 
 																application->GetResourceManager()->LoadFromResources<Texture>("flowers_tex"), 
 																application->GetResourceManager()->LoadFromResources<Texture>("path_tex"));
+
 
 
 	/**

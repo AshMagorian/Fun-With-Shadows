@@ -33,6 +33,8 @@ public:
 	void SetFilteringLinear();
 	void SetFilteringNearest();
 
+	static unsigned char* ExtractImageData(std::string path, int *w, int *h);
+
 	/**
 	*\brief Returns the size
 	*/

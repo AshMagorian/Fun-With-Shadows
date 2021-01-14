@@ -1,5 +1,10 @@
 #include <VanillaEngine/VanillaEngine.h>
-const float Terrain::size = 200.0f;
+
+#include "stb_image.h"
+
+const float Terrain::size = 100.0f;
+const float Terrain::m_maxHeight = 10.0f;
+const float Terrain::m_maxPixelColour = 256.0f;
 
 Terrain::Terrain(int _x, int _z, std::shared_ptr<Texture> _blendMap, std::shared_ptr<Texture> _bg, std::shared_ptr<Texture> _r, std::shared_ptr<Texture> _g, std::shared_ptr<Texture> _b)
 
@@ -23,6 +28,13 @@ void Terrain::SetTextures(std::shared_ptr<Texture> _blendMap, std::shared_ptr<Te
 
 void Terrain::GenerateTerrain()
 {
+	//Read the depth texture
+	int w, h;
+	int channels = 0;
+	unsigned char *data = stbi_load("../src/resources/heightmap.png", &w, &h, &channels, 4);
+	//Set the vertex count to the pixel height of the image
+	vertexCount = h;
+
 	int count = vertexCount * vertexCount;
 	std::vector<float> vertices;
 	std::vector<float> normals;
@@ -36,12 +48,15 @@ void Terrain::GenerateTerrain()
 			float j_unitInterval = (float)j / ((float)vertexCount - 1.0f);
 			float i_unitInterval = (float)i / ((float)vertexCount - 1.0f);
 
+			GetTerrainHeight(j, i, data);
+
 			vertices.push_back(j_unitInterval * size);
-			vertices.push_back(0.0f);
+			vertices.push_back(GetTerrainHeight(j, i, data));
 			vertices.push_back(i_unitInterval * size);
-			normals.push_back(0.0f);
-			normals.push_back(1.0f);
-			normals.push_back(0.0f);
+			glm::vec3 normal = CalculateNormal(j, i, data);
+			normals.push_back(normal.x);
+			normals.push_back(normal.y);
+			normals.push_back(normal.z);
 			texCoords.push_back(j_unitInterval);
 			texCoords.push_back(i_unitInterval);
 		}
@@ -63,8 +78,35 @@ void Terrain::GenerateTerrain()
 			indices.push_back(bottomRight);
 		}
 	}
-	std::cout << indices.size() << std::endl;
+
+	free(data);
+
 	CreateVAO(vertices, normals, texCoords, indices);
+}
+
+float Terrain::GetTerrainHeight(int x, int y, unsigned char* data)
+{
+	//Check if the selected pixel is in bounds
+	if (x < 0 || x >= vertexCount || y < 0 || y >= vertexCount)
+		return 0.0f;
+	float height = data[4 * (y * vertexCount + x) + 0];
+	height -= (m_maxPixelColour / 2.0f);
+	height /= (m_maxPixelColour / 2.0f);
+	height *= m_maxHeight;
+
+	//std::cout << height << std::endl;
+	return height;
+}
+
+glm::vec3 Terrain::CalculateNormal(int x, int y, unsigned char* data)
+{
+	float l = GetTerrainHeight(x - 1, y, data);
+	float r = GetTerrainHeight(x + 1, y, data);
+	float d = GetTerrainHeight(x, y - 1, data);
+	float u = GetTerrainHeight(x, y + 1, data);
+	glm::vec3 normal = glm::vec3(l - r, 2.0f, d - u);
+	glm::normalize(normal);
+	return normal;
 }
 
 void Terrain::CreateVAO(std::vector<float> _vert, std::vector<float> _norm, std::vector<float> _tex, std::vector<int> _ind)
@@ -119,5 +161,5 @@ void Terrain::CreateModelMatrix()
 
 int Terrain::GetModelVertexCount()
 {
-	return vertexCount * vertexCount * 6;
+	return (vertexCount - 1) * (vertexCount - 1) * 6;
 }

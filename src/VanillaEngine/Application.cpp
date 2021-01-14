@@ -29,6 +29,7 @@ std::shared_ptr<Application> const Application::Init(int _w, int _h)
 
 	glfwMakeContextCurrent(app->m_window);
 	std::cout << glGetString(GL_VERSION) << std::endl;
+	glfwSwapInterval(1);
 
 	try 
 	{ 

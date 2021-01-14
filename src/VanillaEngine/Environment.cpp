@@ -17,7 +17,7 @@ void Environment::CapFramerate(float _framerate)
 {
 	if (m_deltaTime < (1.0f / _framerate))		//caps framerate
 	{
-		std::this_thread::sleep_for(std::chrono::milliseconds(int((1.0f / _framerate) - m_deltaTime)*1000));
+
 	}
 	m_lastTime = m_currentTime;
 }

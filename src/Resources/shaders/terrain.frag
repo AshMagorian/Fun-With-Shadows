@@ -50,6 +50,7 @@ in VS_OUT {
     vec3 Normal;
     vec2 TexCoord;
     vec4 FragPosLightSpace;
+	float Visibility;
 } fs_in;
 
 uniform vec3 in_ViewPos;
@@ -70,6 +71,8 @@ uniform SpotLight in_SpotLights[50];
 uniform Material in_Material;
 uniform sampler2D in_ShadowMap;
 
+const vec3 skyColor = vec3(0.2, 0.25, 0.35);
+
 vec3 CalcDiffuse();
 vec3 CalcDirLight(DirLight _light, vec3 _normal, vec3 _viewDir, vec3 diffuseTex, vec3 specularTex);
 vec3 CalcPointLight(PointLight light, vec3 _normal, vec3 fragPos, vec3 viewDir, vec3 diffuseTex, vec3 specularTex);
@@ -84,11 +87,8 @@ void main()
 	//Pre-calculates the texture values
 	vec3 diffuseTex = CalcDiffuse();
 	
-	//hmm, I should change this
+	//I should change this
 	vec3 specularTex = vec3(0.2, 0.2, 0.2);
-
-
-
 
 
 	vec3 result = CalcDirLight(in_DirLight, norm, viewDir, diffuseTex, specularTex);
@@ -101,7 +101,8 @@ void main()
 		result += CalcSpotLight(in_SpotLights[i], norm, fs_in.FragPos, viewDir, diffuseTex, specularTex);
 	}
 
-	FragColor = vec4(result, 1);
+	//FragColor = vec4(result, 1);
+	FragColor = mix(vec4(skyColor, 1.0), vec4(result, 1), fs_in.Visibility);
 }
 
 //Calculates the diffuse fragment colour to be used 
